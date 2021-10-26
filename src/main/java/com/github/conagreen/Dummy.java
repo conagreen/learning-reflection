@@ -10,7 +10,7 @@ public class Dummy {
         this.value = value;
     }
 
-    public Dummy() {
+    private Dummy() {
     }
 
     public String getName() {
