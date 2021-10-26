@@ -50,3 +50,19 @@ public class Application {
     }
 }
 ```
+
+## 1.2. constructor
+
+```java
+// 생성자 API
+for (Constructor<?> constructor : clazz.getConstructors()) {
+    System.out.println(constructor);
+    System.out.println(constructor.getDeclaringClass());
+    System.out.println(constructor.getModifiers());
+    System.out.println("-----------------------------");
+    for (Class<?> parameterType : constructor.getParameterTypes()) {
+        System.out.println("parameterType = " + parameterType);
+    }
+    System.out.println("-----------------------------");
+}
+```
