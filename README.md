@@ -66,3 +66,16 @@ for (Constructor<?> constructor : clazz.getConstructors()) {
     System.out.println("-----------------------------");
 }
 ```
+
+## 1.3. field
+
+- Field 클래스는 클래스에 있는 변수들의 정보를 제공하기 위해 사용한다.
+
+```java
+final Field[] fields = clazz.getDeclaredFields();
+for (Field field : fields) {
+    System.out.println("---------------------------");
+    System.out.println(field.getName());
+    System.out.println(field.getModifiers());
+}
+```
