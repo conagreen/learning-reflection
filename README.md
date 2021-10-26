@@ -67,7 +67,7 @@ for (Constructor<?> constructor : clazz.getConstructors()) {
 }
 ```
 
-## 1.3. field
+## 1.3. fields
 
 - Field 클래스는 클래스에 있는 변수들의 정보를 제공하기 위해 사용한다.
 
@@ -77,5 +77,25 @@ for (Field field : fields) {
     System.out.println("---------------------------");
     System.out.println(field.getName());
     System.out.println(field.getModifiers());
+}
+```
+
+## 1.4. methods
+
+- Method 클래스를 이용하여 메소드에 대한 정보를 얻을 수 있다.
+
+```java
+final Method[] methods = clazz.getMethods();
+for (Method method : methods) {
+    System.out.println("=======================================");
+    System.out.println(method.getName());
+    final Class<?>[] parameterTypes = method.getParameterTypes();
+    for (Class<?> parameterType : parameterTypes) {
+        System.out.println("-------------------------------");
+        System.out.println("parameterType = " + parameterType);
+        System.out.println("-------------------------------");
+    }
+    System.out.println(method.getReturnType().getName());
+    System.out.println("=======================================");
 }
 ```
