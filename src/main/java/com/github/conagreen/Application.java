@@ -1,6 +1,6 @@
 package com.github.conagreen;
 
-import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 
 public class Application {
 
@@ -8,16 +8,11 @@ public class Application {
         final Class clazz = Class.forName("com.github.conagreen.Dummy");
         System.out.println("clazz = " + clazz);
 
-        // 생성자 API
-        for (Constructor<?> constructor : clazz.getConstructors()) {
-            System.out.println(constructor);
-            System.out.println(constructor.getDeclaringClass());
-            System.out.println(constructor.getModifiers());
-            System.out.println("-----------------------------");
-            for (Class<?> parameterType : constructor.getParameterTypes()) {
-                System.out.println("parameterType = " + parameterType);
-            }
-            System.out.println("-----------------------------");
+        final Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            System.out.println("---------------------------");
+            System.out.println(field.getName());
+            System.out.println(field.getModifiers());
         }
     }
 }
