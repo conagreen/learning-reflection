@@ -1,4 +1,4 @@
-package com.github.conagreen;
+package com.github.conagreen.prac_basic;
 
 public class Dog {
 

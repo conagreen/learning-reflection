@@ -1,11 +1,11 @@
-package com.github.conagreen;
+package com.github.conagreen.prac_basic;
 
 import java.lang.reflect.*;
 
 public class Application {
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-//        final Class<?> clazz = Class.forName("com.github.conagreen.TestCaseByJunit3");
+        final Class<?> clazz = Class.forName("com.github.conagreen.prac_basic.TestCaseByJunit3");
         // 해보기 1 - 클래스 정보 출력
 //        System.out.println("clazz = " + clazz);
 
@@ -39,11 +39,11 @@ public class Application {
 //            System.out.println(field.get(dog));
 //        }
 
-        // 해보기 5 - 생성자가 파라미터를 가지고 있는 경우에 인스턴스 생성
-        final Class<?> clazz4 = DumbDumb.class;
-        final Constructor<?> constructor = clazz4.getConstructor(String.class, long.class);
-        DumbDumb dumbDumb = (DumbDumb) constructor.newInstance("dumb", 1234);
-        System.out.println("name = " + dumbDumb.getName());
-        System.out.println("amount = " + dumbDumb.getAmount());
+//        // 해보기 5 - 생성자가 파라미터를 가지고 있는 경우에 인스턴스 생성
+//        final Class<?> clazz4 = DumbDumb.class;
+//        final Constructor<?> constructor = clazz4.getConstructor(String.class, long.class);
+//        DumbDumb dumbDumb = (DumbDumb) constructor.newInstance("dumb", 1234);
+//        System.out.println("name = " + dumbDumb.getName());
+//        System.out.println("amount = " + dumbDumb.getAmount());
     }
 }

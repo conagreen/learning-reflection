@@ -3,7 +3,7 @@
 클래스 가지고 오는 방법
 
 ```java
-final Class<?> clazz = Class.forName("com.github.conagreen.Dummy");
+final Class<?> clazz = Class.forName("com.github.conagreen.prac_basic.Dummy");
 final Class<?> clazz2 = Dummy.class;
 ```
 
@@ -15,7 +15,7 @@ final Class<?> clazz2 = Dummy.class;
 public class Application {
     
     public static void main(String[] args) throws ClassNotFoundException {
-        final Class clazz = Class.forName("com.github.conagreen.Dummy");
+        final Class clazz = Class.forName("com.github.conagreen.prac_basic.Dummy");
         System.out.println("clazz = " + clazz);
         
         // java reflection api - Class

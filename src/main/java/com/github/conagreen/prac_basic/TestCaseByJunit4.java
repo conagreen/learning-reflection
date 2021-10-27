@@ -1,4 +1,6 @@
-package com.github.conagreen;
+package com.github.conagreen.prac_basic;
+
+import com.github.conagreen.prac_basic.RunTest;
 
 public class TestCaseByJunit4 {
 
