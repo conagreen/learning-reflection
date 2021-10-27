@@ -99,3 +99,65 @@ for (Method method : methods) {
     System.out.println("=======================================");
 }
 ```
+
+## 1.5. 해보기
+
+1. 클래스 정보 출력
+
+2. mini JUnit3
+- test로 시작하는 이름을 가진 메서드만 실행
+
+```java
+public class TestCaseByJunit3 {
+    public void testDummy() {
+        System.out.println("test dummy executed");
+    }
+    
+    public void test2() {
+        System.out.println("test2");
+    }
+    
+    public void nothing() {
+        System.out.println("Can not be executed");
+    }
+}
+```
+
+- 클래스 생성
+  - clazz.newInstance()
+  - method.invoke(clazz.newInstance())
+
+3. 어노테이션 걸려있는 메소드만 실행
+
+```java
+public class TestCaseByJunit4 {
+    
+    @RunTest
+    public void uno() {
+        System.out.println("uno");
+    }
+    
+    @RunTest
+    public void dos() {
+        System.out.println("dos");
+    }
+    
+    public void tres() {
+        System.out.println("tres");
+    }
+}
+```
+
+- method. isAnnotationPresent(RunTest.class)
+
+4. private field에 접근하기
+- fields = getDeclaredFields()
+- field.setAccessible(true)
+- 생성
+  - dog = new Dog()
+  - field.set(dog, 값);
+- getter
+
+5. 생성자가 파라미터를 가지고 있는 경우에 인스턴스 생성
+- 기본 생성자가 없으면 clazz.newInstance() 불가
+- clazz.get
