@@ -1,6 +1,6 @@
 ## [ INDEX ]
 
-- [01. Java Reflection API](#1-java-reflection-api)
+- [01. Java Reflection API](#01-java-reflection-api)
   - [1-1. class](#1-1-class)
   - [1-2. constructor](#1-2-constructor)
   - [1-3. fields](#1-3-fields)
