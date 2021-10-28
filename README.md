@@ -1,13 +1,36 @@
-# 1. Java Reflection API
+## [ INDEX ]
 
-클래스 가지고 오는 방법
+- [01. Java Reflection API](#1-java-reflection-api)
+  - [1-1. class](#1-1-class)
+  - [1-2. constructor](#1-2-constructor)
+  - [1-3. fields](#1-3-fields)
+  - [1-4. methods](#1-4-methods)
+  - [1-5. 해보기](#1-5-) 
+     - [1. 클래스 정보 출력](#1---)
+     - [2. test로 시작하는 이름을 가진 메서드만 실행](#2-test-----)
+     - [3. 어노테이션 걸려있는 메서드만 실행](#3----)
+     - [4. private field에 접근한 후 값 변경하기](#4-private-field----)
+     - [5. 파라미터를 2개 가지고 있는 생성자로 인스턴스 생성](#5--2-----)
+  - [1-6. 참고](#1-6-)
+
+- [02. reflections 이용해서 컴포넌트 스캔 만들기](#02-reflections----)
+
+
+
+
+# 01. Java Reflection API
+#### Java Reflection이란?
+>- 객체를 통해 클래스의 정보를 분석해 내는 프로그램 기법
+>- 리플렉션은 구체적인 클래스 타입을 알지 못해도, 그 클래스의 메서드, 타입, 필드 등에 접근할 수 있도록 해주는 Java API 
+
+**클래스 가지고 오는 방법**
 
 ```java
 final Class<?> clazz = Class.forName("com.github.conagreen.prac_basic.Dummy");
 final Class<?> clazz2 = Dummy.class;
 ```
 
-## 1.1. class
+## 1-1. class
 
 - Class 클래스는 클래스에 대한 정보를 얻을 수 있다.
 
@@ -51,7 +74,7 @@ public class Application {
 }
 ```
 
-## 1.2. constructor
+## 1-2. constructor
 
 ```java
 // 생성자 API
@@ -67,7 +90,7 @@ for (Constructor<?> constructor : clazz.getConstructors()) {
 }
 ```
 
-## 1.3. fields
+## 1-3. fields
 
 - Field 클래스는 클래스에 있는 변수들의 정보를 제공하기 위해 사용한다.
 
@@ -80,7 +103,7 @@ for (Field field : fields) {
 }
 ```
 
-## 1.4. methods
+## 1-4. methods
 
 - Method 클래스를 이용하여 메소드에 대한 정보를 얻을 수 있다.
 
@@ -100,12 +123,11 @@ for (Method method : methods) {
 }
 ```
 
-## 1.5. 해보기
+## 1-5. 해보기
 
-1. 클래스 정보 출력
+### 1. 클래스 정보 출력
 
-2. mini JUnit3
-- test로 시작하는 이름을 가진 메서드만 실행
+### 2. test로 시작하는 이름을 가진 메서드만 실행
 
 ```java
 public class TestCaseByJunit3 {
@@ -127,7 +149,7 @@ public class TestCaseByJunit3 {
   - clazz.newInstance()
   - method.invoke(clazz.newInstance())
 
-3. 어노테이션 걸려있는 메소드만 실행
+### 3. 어노테이션 걸려있는 메서드만 실행
 
 ```java
 public class TestCaseByJunit4 {
@@ -150,7 +172,7 @@ public class TestCaseByJunit4 {
 
 - method. isAnnotationPresent(RunTest.class)
 
-4. private field에 접근하기
+### 4. private field에 접근한 후 값 변경하기
 - fields = getDeclaredFields()
 - field.setAccessible(true)
 - 생성
@@ -158,6 +180,11 @@ public class TestCaseByJunit4 {
   - field.set(dog, 값);
 - getter
 
-5. 생성자가 파라미터를 가지고 있는 경우에 인스턴스 생성
+### 5. 파라미터를 2개 가지고 있는 생성자로 인스턴스 생성
 - 기본 생성자가 없으면 clazz.newInstance() 불가
 - clazz.get
+
+## 1-6. 참고
+>- [위키피디아](https://en.wikipedia.org/wiki/Reflective_programming)
+
+# 02. reflections 이용해서 컴포넌트 스캔 만들기
