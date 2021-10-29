@@ -304,5 +304,4 @@ public class Application {
 
 ## 2-2. 참고
 - 하단 링크의 문서를 참고해 실습해 보았다. 간혹 오타가 존재하긴 하지만 실습하는 데에 어려움은 없음.
->- https://www.baeldung.com/reflections-library#4-annotated-constructors
-
+>- https://www.baeldung.com/reflections-library
