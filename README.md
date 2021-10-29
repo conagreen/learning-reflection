@@ -11,10 +11,17 @@
      - [3. 어노테이션 걸려있는 메서드만 실행](#3-어노테이션-걸려있는-메서드만-실행)
      - [4. private field에 접근한 후 값 변경하기](#4-private-field에-접근한-후-값-변경하기)
      - [5. 파라미터를 2개 가지고 있는 생성자로 인스턴스 생성](#5-파라미터를-2개-가지고-있는-생성자로-인스턴스-생성)
+     - [6. 최종 코드](#6-최종-코드)
   - [1-6. 참고](#1-6-참고)
 
 - [02. reflections 이용해서 컴포넌트 스캔 만들기](#02-reflections-이용해서-컴포넌트-스캔-만들기)
-
+  - [2-1. 과정](#2-1-과정)
+    - [1. 스캔 대상이 될 어노테이션 정의](#1-스캔-대상이-될-어노테이션-정의)
+    - [2. 클래스에 정의한 어노테이션 적용](#2-클래스에-정의한-어노테이션-적용)
+    - [3. URL 및 Scanner 설정](#3-URL-및-Scanner-설정)
+    - [4. getTypesAnnotatedWith 메서드로 클래스 가져오기](#4-getTypesAnnotatedWith-메서드로-클래스-가져오기)
+    - [5. 최종 전체 코드](#5-최종-전체-코드)
+  - [2-2. 참고](#2-2-참고)
 
 
 
@@ -184,7 +191,118 @@ public class TestCaseByJunit4 {
 - 기본 생성자가 없으면 clazz.newInstance() 불가
 - clazz.get
 
+### 6. 최종 코드
+[해보기 결과 코드 보러가기](src/main/java/com/github/conagreen/prac_basic)
+
 ## 1-6. 참고
 >- [위키피디아](https://en.wikipedia.org/wiki/Reflective_programming)
 
+
 # 02. reflections 이용해서 컴포넌트 스캔 만들기
+
+## 2-1. 과정
+
+### 1. 스캔 대상이 될 어노테이션 정의
+- @Controller
+- @Repository
+- @Service
+
+**[ 어노테이션 속성 설정 ]**  
+- @Retention(RetentionPolicy.RUNTIME) : 어노테이션의 라이프 사이클 설정
+- @Target(ElementType.TYPE) : 어노테이션 적용할 위치 설정
+
+```java
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface Controller {
+}
+```
+
+### 2. 클래스에 정의한 어노테이션 적용
+```java
+@Controller
+public class AController {
+}
+```
+
+### 3. URL 및 Scanner 설정
+- url과 scanner를 설정하는 방법은 Reflections 생성자 또는 ConfigurationBuilder를 이용하는 방법이 있음.
+
+**[방법1. 생성자의 파라미터로 설정하는 방법 ]**
+```java
+Reflections reflections = new Reflections(
+        "com.github.conagreen.component_scan",
+        new SubTypesScanner(),
+        new TypeAnnotationsScanner());
+```
+
+**[방법2. ConfigurationBuilder를 이용하는 방법 ]**
+```java
+Reflections reflections = new Reflections( new ConfigurationBuilder()
+        .setUrls(ClasspathHelper.forPackage("com.github.conagreen.component_scaㅅ"))
+        .setScanners(new SubTypesScanner(), new TypeAnnotationsScanner()));
+```
+
+### 4. getTypesAnnotatedWith 메서드로 클래스 가져오기
+
+```java
+public Set<Class<?>> getClassWithControllerAnnotation() {
+        Reflections reflections = new Reflections(
+                "com.github.conagreen.component_scan",
+                new SubTypesScanner(),
+                new TypeAnnotationsScanner());
+        return reflections.getTypesAnnotatedWith(Controller.class);
+    }
+```
+- getTypesAnnotatedWith의 매개변수로 주어진 어노테이션을 기준으로 클래스를 가져온다.
+- 클래스의 런타임 어노테이션을 찾는 스캐너는 TypeAnnotationsScanner이고, 
+- TypeAnnotationsScanner는 따로 설정하지 않으면 기본으로 설정되는 스캐너이므로 코드를 줄일 수 있다.
+
+### 5. 최종 전체 코드
+
+```java
+public class Application {
+    private final Reflections reflections = new Reflections("com.github.conagreen.component_scan");
+
+    public Set<Class<?>> getClassWithControllerAnnotation() {
+        return reflections.getTypesAnnotatedWith(Controller.class);
+    }
+
+    public Set<Class<?>> getClassWithRepositoryAnnotation() {
+        return reflections.getTypesAnnotatedWith(Repository.class);
+    }
+
+    public Set<Class<?>> getClassWithServiceAnnotation() {
+        return reflections.getTypesAnnotatedWith(Service.class);
+    }
+
+
+    public static void main(String[] args) {
+        Application application = new Application();
+
+        System.out.println("----------------------------- @Controller -----------------------------");
+        final Set<Class<?>> classWithControllerAnnotation = application.getClassWithControllerAnnotation();
+        for (Class<?> controllerClass : classWithControllerAnnotation) {
+            System.out.println("controllerClass = " + controllerClass);
+        }
+
+        System.out.println("----------------------------- @Repository -----------------------------");
+        final Set<Class<?>> classWithRepositoryAnnotation = application.getClassWithRepositoryAnnotation();
+        for (Class<?> repositoryClass : classWithRepositoryAnnotation) {
+            System.out.println("repositoryClass = " + repositoryClass);
+        }
+
+        System.out.println("----------------------------- @Service -----------------------------");
+        final Set<Class<?>> classWithServiceAnnotation = application.getClassWithServiceAnnotation();
+        for (Class<?> serviceClass : classWithServiceAnnotation) {
+            System.out.println("serviceClass = " + serviceClass);
+        }
+
+    }
+}
+```
+
+## 2-2. 참고
+- 하단 링크의 문서를 참고해 실습해 보았다. 간혹 오타가 존재하긴 하지만 실습하는 데에 어려움은 없음.
+>- https://www.baeldung.com/reflections-library#4-annotated-constructors
+
