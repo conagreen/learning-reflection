@@ -1,11 +1,14 @@
 package com.github.conagreen.component_scan;
 
 import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
 
 import java.util.Set;
 
 public class Application {
-    private final Reflections reflections = new Reflections("com.github.conagreen.component_scan");
+    private final Reflections reflections = new Reflections(
+            "com.github.conagreen.component_scan",
+            Scanners.TypesAnnotated );
 
     public Set<Class<?>> getClassWithControllerAnnotation() {
         return reflections.getTypesAnnotatedWith(Controller.class);
